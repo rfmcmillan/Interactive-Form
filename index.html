@@ -32,8 +32,10 @@
           <option value="back-end developer">Back End Developer</option>
           <option value="designer">Designer</option>          
           <option value="student">Student</option>
-          <option value="other">Other</option>  
-        </select>           
+          <option value="other" id='other-dropdown'>Other</option>  
+        </select>
+        
+        <input type='text' id='other-title' class = 'is-hidden' placeholder='Your Job Role'>
       </fieldset>
       
       <fieldset class="shirt">
@@ -54,8 +56,8 @@
             <label for="design">Design:</label>
             <select id="design" name="user-design">
               <option>Select Theme</option>
-              <option value="js puns">Theme - JS Puns</option>
-              <option value="heart js">Theme - I &#9829; JS</option>
+              <option value="js puns" id='js-puns'>Theme - JS Puns</option>
+              <option value="heart js" id='i-love-js'>Theme - I &#9829; JS</option>
             </select>
           </div>
 
@@ -110,7 +112,7 @@
         <label for="payment">I'm going to pay with:</label>
         <select id="payment" name="user-payment">
           <option value="select method">Select Payment Method</option>
-          <option value="credit card">Credit Card</option>
+          <option value="credit card" id='cc-option'>Credit Card</option>
           <option value="paypal">PayPal</option>
           <option value="bitcoin">Bitcoin</option>
         </select>
