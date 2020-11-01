@@ -1,8 +1,15 @@
-// select name input
+// define global variables
 const userName = document.querySelector('#name');
-// focus on name input
+const form = document.querySelector("form");
+const email = document.querySelector("#mail");
+const title = document.querySelector("#title");
+const activitiesContainer = document.querySelector(".activities");
+const activitiesInputs = document.querySelectorAll(".activities input");
+
+// focus on name input, when the page initially loads
 userName.focus();
 
+// create behavior for the 'T-Shirt Info' section
 const shirtColorOptions = document.querySelectorAll('#color option');
 for (let i = 0; i <shirtColorOptions.length; i++) {
     shirtColorOptions[i].hidden = true;
@@ -36,6 +43,7 @@ function defaultPayment () {
 
 defaultPayment();
 
+// this code creates the initial condition for the Credit Card section
 const cCInfo = document.querySelector('#credit-card');
 const pleaseSelect = document.querySelector("option[value='select method']");
 pleaseSelect.disabled = true;
@@ -68,8 +76,154 @@ paymentDrop.addEventListener('change', (e) => {
     }
 
 });
+// _____________________________________________________________________________________________________
+// Validation Messages
 
+// create a new span element
+const activityMessage = document.createElement('span');
+// add the message's text content to the span
+activityMessage.textContent = 'At least one checkbox must be checked.';
+// set the span's color to red
+activityMessage.style.color = 'red';
+// set the span's hidden attribute to true
+activityMessage.style.backgroundColor = 'white';
+activityMessage.hidden = true;
+// append the span to the fieldset
+activitiesContainer.insertBefore(activityMessage, activitiesContainer.firstElementChild);
 
+// _____________________________________________________________________________________________________
+// Form Validation
+
+function nameValidator () {
+    // variable to store name
+    const nameVal = userName.value;
+      // If the name value.length is greater than zero, set the name input's border to white and return true
+    if (nameVal.length > 0) {
+      userName.style.borderColor = 'white';
+      return true;
+    }
+      // Else, set the name input's border to red and return false
+    else {
+      userName.style.borderColor = 'red';
+      return false;
+    }
+}
+
+function emailValidator1 () {
+    const emailVal = email.value;
+    if (emailVal.length > 0) {
+      email.style.borderColor = 'white';
+      return true;
+    }
+      // Else, set the name input's border to red and return false
+    else {
+      email.style.borderColor = 'red';
+      return false;
+    }
+}
+
+function emailValidator2 () {
+
+    // Create a variable to store the `.value` of the `email` input and log it out
+    const emailVal = email.value;
+    // Call this `emailValidator` function in the submit listener below 
+      // To test it, type something in the email field on the form and click the submit button
+  
+    // Create a variable to store the .indexOf of the `@` in the email value
+    const atIndex = emailVal.indexOf('@');
+    // Create a variable to store the .lastIndexOf of the `.` in the email value
+    const dotLastIdx = emailVal.lastIndexOf('.')
+    // Create an if/else statement
+      // If the `@` index is greater than one AND the `.` last index is greater than the `@` index + 1, 
+    if (atIndex > 1 && dotLastIdx > (atIndex + 1)) {
+        // Set the email's border to white and return true
+        email.style.borderColor = 'white';
+        return true;
+    }
+      // Else, set the email's border to red and return false
+    else {
+        email.style.borderColor = 'red';
+        return false;
+    }
+}
+
+function titleValidator () {
+
+    // create a variable to store the `.value` of the `title` element and log it out
+    const titleVal = title.value;
+  
+    // Create an if/else statement
+    if (titleVal !== 'Your Job Role') {
+        title.style.borderColor = 'white';
+        return true;
+    } else {
+        title.style.borderColor = 'red';
+        return false;
+    }
+}
+
+const activityValidator = () => {
+    // Loop over the languagesInputs
+    for (let i = 0; i < activitiesInputs.length; i++) {
+        if (activitiesInputs[i].checked) {
+            return true;
+        }
+    }
+    activityMessage.hidden = false;
+    return false;
+}
+
+function cCValidator () {
+    const cardNumber = document.querySelector('#cc-num');
+    // Create a variable to store the `.value` of the `email` input and log it out
+    const cardNumValue = cardNumber.value;
+    // Call this `emailValidator` function in the submit listener below 
+      // To test it, type something in the email field on the form and click the submit button
+
+    // Create an if/else statement
+    if (/\d{13,14}|\d{15,16}/.test(cardNumValue)) {
+        cardNumber.style.borderColor = 'white';
+        return true;
+    }
+    else {
+        cardNumber.style.borderColor = 'red';
+        return false;
+    }
+}
+
+function cCValidator2 () {
+    const cvv = document.querySelector('#cvv');
+    // Create a variable to store the `.value` of the `email` input and log it out
+    const zipValue = zip.value;
+    // Create an if/else statement
+    if (/\d{5}/.test(zipValue)) {
+        zip.style.borderColor = 'white';
+        return true;
+    }
+    else {
+        zip.style.borderColor = 'red';
+        return false;
+    }
+  }
+
+function cCValidator3 () {
+    const cvv = document.querySelector('#cvv');
+    // Create a variable to store the `.value` of the `email` input and log it out
+    const cvvValue = cvv.value;
+    // Call this `emailValidator` function in the submit listener below 
+    // To test it, type something in the email field on the form and click the submit button
+
+    // Create an if/else statement
+    if (/\d{3}/.test(cvvValue)) {
+        cvv.style.borderColor = 'white';
+        return true;
+    }
+    else {
+        cvv.style.borderColor = 'red';
+        return false;
+    }
+  }
+// _______________________________________________________________________________________________________
 
 // select all of the checkboxes and add to a variable
 const checkboxes = document.querySelectorAll('.activities input');
@@ -78,8 +232,8 @@ const checkboxes = document.querySelectorAll('.activities input');
 document.querySelector('.activities').addEventListener('change', (e) => {
     // loop through the checkboxes 
     for (let i = 0; i < checkboxes.length; i++) {
-    let currDateAndTime = checkboxes[i].getAttribute('data-day-and-time');
-    let targetDateAndTime = e.target.getAttribute('data-day-and-time');
+        let currDateAndTime = checkboxes[i].getAttribute('data-day-and-time');
+        let targetDateAndTime = e.target.getAttribute('data-day-and-time');
         if (currDateAndTime === targetDateAndTime && checkboxes[i] !== e.target) {
         // if target is currently being checked, disable conflicting checkboxes; if it's being unchecked
         // enable all the checkboxes again
@@ -103,8 +257,6 @@ document.querySelector('.activities').addEventListener('change', (e) => {
     // remove any previous total cost p elements 
     if (document.querySelector('.activities p')) {
         document.querySelector('.activities').removeChild(document.querySelector('.activities p'));
-    } else {
-
     }
     // create variable to hold total value of selected activities
     let total = 0;
@@ -129,11 +281,6 @@ document.querySelector('.activities').addEventListener('change', (e) => {
     }
 });
 
-
-
-
-
-
 // select the JS puns theme option
 const jSPuns = document.querySelector('#js-puns');
 // select the I Love JS option
@@ -143,7 +290,6 @@ const iLoveJS = document.querySelector('#i-love-js')
 const themeDrop = document.querySelector('#design');
 // eventListener that listens for if the selected theme is 'JS Puns' or 'I Love JS'
 themeDrop.addEventListener('change', (e) => {
-    console.log(e.target.value);
     let targetValue = e.target.value;
     // if 'JS Puns' is selected, display Cornflower, Dark Slate Grey and Gold
     if (targetValue === 'js puns') {
@@ -163,21 +309,76 @@ themeDrop.addEventListener('change', (e) => {
         shirtColorOptions[4].hidden = false;
         shirtColorOptions[5].hidden = false;
     // end else if
-    } else {
-        console.log('wha?')
-    }
+    } 
 });
 
-// select Job Role dropdown
-const titleDrop = document.querySelector('#title');
-// console.log(otherOption)
-const otherJobRoleTextInput = document.querySelector('#other-title')
+// create placeholder for the Job Role dropdown;
+const titlePH = document.createElement('option');
+titlePH.textContent = 'Your Job Role'
+title.insertBefore(titlePH, title.firstElementChild)
+titlePH.selected = true;
+
+const otherJobRoleTextInput = document.querySelector('#other-title');
+otherJobRoleTextInput.className = 'is-hidden';
 // 'change'event listener to listen for if the drop down menu is changed to 'other'
-titleDrop.addEventListener('change', (e) => {
-    if (titleDrop.value === 'other') {
+title.addEventListener('change', (e) => {
+    if (title.value === 'other') {
         otherJobRoleTextInput.className = '';
     }
 });
+
+// ___________________________________________________________________________________________________________
+
+/*
+Submit listener - when the 'Register button is clicked', the form is 
+validated and the input values are submitted if all of the validator functions pass
+*/
+
+form.addEventListener('submit', (e) => {
+    // call the validator functions
+    nameValidator();
+    emailValidator1();
+    emailValidator2();
+    titleValidator();
+    activityValidator();
+    cCValidator();
+    cCValidator2();
+    cCValidator3();
+    
+    // Create an if statement
+    if (!nameValidator()) {
+        // prevents the page from reloading if the validator function evaluates to false
+        e.preventDefault();
+    }; 
+    
+    if (!emailValidator1()) {
+        e.preventDefault();
+    };
+    
+    if (!emailValidator2()) {
+        e.preventDefault();
+    }; 
+
+    if (!titleValidator()) {
+        e.preventDefault();
+    }; 
+
+    if (!activityValidator()) {
+        e.preventDefault();
+    }; 
+
+    if (!cCValidator()) {
+        e.preventDefault();
+    }; 
+
+    if (!cCValidator2()) {
+        e.preventDefault();
+    }; 
+    
+    if (!cCValidator3()) {
+        e.preventDefault();
+    }; 
+  });
 
 
 
