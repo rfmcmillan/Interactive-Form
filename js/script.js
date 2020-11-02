@@ -148,9 +148,8 @@ function emailValidator1 () {
 function emailValidator2 () {
 
     const emailVal = email.value;
-    const atIndex = emailVal.indexOf('@');
-    const dotLastIdx = emailVal.lastIndexOf('.')
-    if (atIndex > 1 && dotLastIdx > (atIndex + 1)) {
+    // below regex is adapted from https://www.regular-expressions.info/email.html
+    if (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(emailVal)) {
         email.style.borderColor = 'white';
         emailMsg2.hidden = true;
         return true;
