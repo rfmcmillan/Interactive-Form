@@ -5,17 +5,22 @@ const email = document.querySelector("#mail");
 const title = document.querySelector("#title");
 const activitiesContainer = document.querySelector(".activities");
 const activitiesInputs = document.querySelectorAll(".activities input");
+const shirtColorDrop = document.querySelector('#color');
+const shirtColorDiv = document.querySelector('#shirt-colors');
+
 
 // focus on name input, when the page initially loads
 userName.focus();
 
 // create behavior for the 'T-Shirt Info' section
+
+// 'Color' dropdown menu is hidden until a T-shirt design is selected
+shirtColorDiv.hidden = true;
+
 const shirtColorOptions = document.querySelectorAll('#color option');
 for (let i = 0; i <shirtColorOptions.length; i++) {
     shirtColorOptions[i].hidden = true;
 }
-// select the shirt color dropdown menu
-const shirtColorDrop = document.querySelector('#color');
 // create a new option Element
 const colorPrompt = document.createElement('option');
 colorPrompt.textContent = 'Please Select a T-shirt Theme'
@@ -79,17 +84,38 @@ paymentDrop.addEventListener('change', (e) => {
 // _____________________________________________________________________________________________________
 // Validation Messages
 
+// Activity Section Error Message
 // create a new span element
 const activityMessage = document.createElement('span');
 // add the message's text content to the span
 activityMessage.textContent = 'At least one checkbox must be checked.';
 // set the span's color to red
-activityMessage.style.color = 'red';
+activityMessage.style.color = 'white';
 // set the span's hidden attribute to true
-activityMessage.style.backgroundColor = 'white';
+activityMessage.style.backgroundColor = 'red';
 activityMessage.hidden = true;
 // append the span to the fieldset
 activitiesContainer.insertBefore(activityMessage, activitiesContainer.firstElementChild);
+
+// Email error message 1
+const emailMsg1 = document.createElement('span');
+emailMsg1.textContent = "Email address field must not be left blank."
+emailMsg1.style.color = 'white';
+emailMsg1.style.backgroundColor = 'red';
+emailMsg1.hidden = true;
+// insert before the email input
+form.firstElementChild.insertBefore(emailMsg1, email);
+
+// Email error message 2
+const emailMsg2 = document.createElement('span');
+emailMsg2.textContent = "Email address must contain an '@' symbol before a '.'."
+emailMsg2.style.color = 'white';
+emailMsg2.style.backgroundColor = 'red';
+emailMsg2.hidden = true;
+// insert before the email input
+const emailMsgBreak = document.createElement('br');
+form.firstElementChild.insertBefore(emailMsgBreak, email)
+form.firstElementChild.insertBefore(emailMsg2, email);
 
 // _____________________________________________________________________________________________________
 // Form Validation
@@ -113,11 +139,13 @@ function emailValidator1 () {
     const emailVal = email.value;
     if (emailVal.length > 0) {
       email.style.borderColor = 'white';
+      emailMsg1.hidden = true;
       return true;
     }
       // Else, set the name input's border to red and return false
     else {
       email.style.borderColor = 'red';
+      emailMsg1.hidden = false;
       return false;
     }
 }
@@ -138,11 +166,13 @@ function emailValidator2 () {
     if (atIndex > 1 && dotLastIdx > (atIndex + 1)) {
         // Set the email's border to white and return true
         email.style.borderColor = 'white';
+        emailMsg2.hidden = true;
         return true;
     }
       // Else, set the email's border to red and return false
     else {
         email.style.borderColor = 'red';
+        emailMsg2.hidden = false;
         return false;
     }
 }
@@ -166,6 +196,7 @@ const activityValidator = () => {
     // Loop over the languagesInputs
     for (let i = 0; i < activitiesInputs.length; i++) {
         if (activitiesInputs[i].checked) {
+            activityMessage.hidden = true;
             return true;
         }
     }
@@ -224,6 +255,7 @@ function cCValidator3 () {
     }
   }
 // _______________________________________________________________________________________________________
+// Event Listeners
 
 // select all of the checkboxes and add to a variable
 const checkboxes = document.querySelectorAll('.activities input');
@@ -293,6 +325,7 @@ themeDrop.addEventListener('change', (e) => {
     let targetValue = e.target.value;
     // if 'JS Puns' is selected, display Cornflower, Dark Slate Grey and Gold
     if (targetValue === 'js puns') {
+        shirtColorDiv.hidden = false;
         shirtColorOptions[0].hidden = false;
         shirtColorOptions[1].hidden = false;
         shirtColorOptions[2].hidden = false;
@@ -302,6 +335,7 @@ themeDrop.addEventListener('change', (e) => {
     // end if
     // if I Love JS is selected, display Tomato,Steel Blue and Dim Grey
     } else if (targetValue === 'heart js') {
+        shirtColorDiv.hidden = false;
         shirtColorOptions[0].hidden = true;
         shirtColorOptions[1].hidden = true;
         shirtColorOptions[2].hidden = true;
@@ -309,7 +343,10 @@ themeDrop.addEventListener('change', (e) => {
         shirtColorOptions[4].hidden = false;
         shirtColorOptions[5].hidden = false;
     // end else if
-    } 
+    } else if (targetValue === 'select-theme') {
+        shirtColorDiv.hidden = true;
+    }
+
 });
 
 // create placeholder for the Job Role dropdown;
@@ -380,7 +417,19 @@ form.addEventListener('submit', (e) => {
     }; 
   });
 
+email.addEventListener('keyup', (e) => {
+    
+    emailValidator1();
+    emailValidator2();
 
+    if (!emailValidator1()) {
+        e.preventDefault();
+    }; 
+
+    if (!emailValidator2()) {
+        e.preventDefault();
+    }; 
+});
 
 
 
