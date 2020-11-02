@@ -43,7 +43,6 @@ function defaultPayment () {
     // do the same for bitcoin info
     const bitcoin = document.querySelector('#bitcoin');
     bitcoin.hidden = true;
-    
 }
 
 defaultPayment();
@@ -53,7 +52,7 @@ const cCInfo = document.querySelector('#credit-card');
 const pleaseSelect = document.querySelector("option[value='select method']");
 pleaseSelect.disabled = true;
 
-// event listener for if payment dropdown is changed
+// event listener for payment dropdown menu
 const paymentDrop = document.querySelector('#payment');
 paymentDrop.addEventListener('change', (e) => {
     
@@ -121,14 +120,11 @@ form.firstElementChild.insertBefore(emailMsg2, email);
 // Form Validation
 
 function nameValidator () {
-    // variable to store name
     const nameVal = userName.value;
-      // If the name value.length is greater than zero, set the name input's border to white and return true
     if (nameVal.length > 0) {
       userName.style.borderColor = 'white';
       return true;
     }
-      // Else, set the name input's border to red and return false
     else {
       userName.style.borderColor = 'red';
       return false;
@@ -142,7 +138,6 @@ function emailValidator1 () {
       emailMsg1.hidden = true;
       return true;
     }
-      // Else, set the name input's border to red and return false
     else {
       email.style.borderColor = 'red';
       emailMsg1.hidden = false;
@@ -152,24 +147,14 @@ function emailValidator1 () {
 
 function emailValidator2 () {
 
-    // Create a variable to store the `.value` of the `email` input and log it out
     const emailVal = email.value;
-    // Call this `emailValidator` function in the submit listener below 
-      // To test it, type something in the email field on the form and click the submit button
-  
-    // Create a variable to store the .indexOf of the `@` in the email value
     const atIndex = emailVal.indexOf('@');
-    // Create a variable to store the .lastIndexOf of the `.` in the email value
     const dotLastIdx = emailVal.lastIndexOf('.')
-    // Create an if/else statement
-      // If the `@` index is greater than one AND the `.` last index is greater than the `@` index + 1, 
     if (atIndex > 1 && dotLastIdx > (atIndex + 1)) {
-        // Set the email's border to white and return true
         email.style.borderColor = 'white';
         emailMsg2.hidden = true;
         return true;
     }
-      // Else, set the email's border to red and return false
     else {
         email.style.borderColor = 'red';
         emailMsg2.hidden = false;
@@ -179,10 +164,8 @@ function emailValidator2 () {
 
 function titleValidator () {
 
-    // create a variable to store the `.value` of the `title` element and log it out
     const titleVal = title.value;
   
-    // Create an if/else statement
     if (titleVal !== 'Your Job Role') {
         title.style.borderColor = 'white';
         return true;
@@ -193,7 +176,6 @@ function titleValidator () {
 }
 
 const activityValidator = () => {
-    // Loop over the languagesInputs
     for (let i = 0; i < activitiesInputs.length; i++) {
         if (activitiesInputs[i].checked) {
             activityMessage.hidden = true;
@@ -206,12 +188,8 @@ const activityValidator = () => {
 
 function cCValidator () {
     const cardNumber = document.querySelector('#cc-num');
-    // Create a variable to store the `.value` of the `email` input and log it out
     const cardNumValue = cardNumber.value;
-    // Call this `emailValidator` function in the submit listener below 
-      // To test it, type something in the email field on the form and click the submit button
 
-    // Create an if/else statement
     if (/\d{13,14}|\d{15,16}/.test(cardNumValue)) {
         cardNumber.style.borderColor = 'white';
         return true;
@@ -224,9 +202,7 @@ function cCValidator () {
 
 function cCValidator2 () {
     const cvv = document.querySelector('#cvv');
-    // Create a variable to store the `.value` of the `email` input and log it out
     const zipValue = zip.value;
-    // Create an if/else statement
     if (/\d{5}/.test(zipValue)) {
         zip.style.borderColor = 'white';
         return true;
@@ -239,12 +215,8 @@ function cCValidator2 () {
 
 function cCValidator3 () {
     const cvv = document.querySelector('#cvv');
-    // Create a variable to store the `.value` of the `email` input and log it out
     const cvvValue = cvv.value;
-    // Call this `emailValidator` function in the submit listener below 
-    // To test it, type something in the email field on the form and click the submit button
 
-    // Create an if/else statement
     if (/\d{3}/.test(cvvValue)) {
         cvv.style.borderColor = 'white';
         return true;
@@ -257,12 +229,9 @@ function cCValidator3 () {
 // _______________________________________________________________________________________________________
 // Event Listeners
 
-// select all of the checkboxes and add to a variable
 const checkboxes = document.querySelectorAll('.activities input');
 
-// create event listener to handle what happens when the Activities checkboxes are checked
 document.querySelector('.activities').addEventListener('change', (e) => {
-    // loop through the checkboxes 
     for (let i = 0; i < checkboxes.length; i++) {
         let currDateAndTime = checkboxes[i].getAttribute('data-day-and-time');
         let targetDateAndTime = e.target.getAttribute('data-day-and-time');
@@ -313,9 +282,9 @@ document.querySelector('.activities').addEventListener('change', (e) => {
     }
 });
 
-// select the JS puns theme option
+// select the 'JS puns' theme option
 const jSPuns = document.querySelector('#js-puns');
-// select the I Love JS option
+// select the 'I Love JS' option
 const iLoveJS = document.querySelector('#i-love-js')
 
 // select the theme dropdown menu
@@ -345,6 +314,7 @@ themeDrop.addEventListener('change', (e) => {
     // end else if
     } else if (targetValue === 'select-theme') {
         shirtColorDiv.hidden = true;
+    // end else if
     }
 
 });
@@ -357,7 +327,7 @@ titlePH.selected = true;
 
 const otherJobRoleTextInput = document.querySelector('#other-title');
 otherJobRoleTextInput.className = 'is-hidden';
-// 'change'event listener to listen for if the drop down menu is changed to 'other'
+// 'change' event listener to listen for if the drop down menu is changed to 'other'
 title.addEventListener('change', (e) => {
     if (title.value === 'other') {
         otherJobRoleTextInput.className = '';
